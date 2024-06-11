@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="static/logo-2.png" type="image/svg+xml">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("../static/bg3.jpg");
+            background-size: cover;
+        }
+
+        .header {
+            background: linear-gradient(to right, #f4f4f4, #ddd);
+            padding: 10px 10px 0px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            color: #333;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .header img {
+            width: 90px;
+            max-height: 90px;
+        }
+
+        .header a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #6a0dad;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" id="logo">
+        <h1 style="text-align: center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Crop Disease Predictor</h1>
+        <a href="/">Home</a>
+    </div>
+    <div class="container">
+        <h1>Disease Predictor</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="fileInput">Upload an image of the diseased crop:</label>
+            <input type="file" id="fileInput" name="file" accept="image/*" title="Choose an image file" required>
+            <button type="submit">Predict Disease</button>
+        </form>
+        <div class="result" id="result" style="display: none;">
+            <h2>Prediction Result</h2>
+            <p id="prediction"></p>
+            <h3>Disease Information</h3>
+            <pre id="diseaseInfo" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2024 Disease Prediction App. All rights reserved.
+    </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+    
+            fetch('/diseasePredict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                const predictionP = document.getElementById('prediction');
+                const diseaseInfoPre = document.getElementById('diseaseInfo');
+                const uploadedImage = document.createElement('img');
+                uploadedImage.src = URL.createObjectURL(file); // Create object URL from the uploaded file
+    
+                if (data.prediction) {
+                    // Display uploaded image
+                    resultDiv.insertBefore(uploadedImage, predictionP);
+                    // Display prediction results
+                    predictionP.textContent = `Predicted Disease: ${data.prediction}`;
+                    diseaseInfoPre.textContent = data.info;
+                } else if (data.error) {
+                    predictionP.textContent = `Error: ${data.error}`;
+                    diseaseInfoPre.textContent = '';
+                }
+                resultDiv.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    
+</body>
+</html>

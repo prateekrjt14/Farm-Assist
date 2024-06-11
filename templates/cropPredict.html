@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="static/logo-2.png" type="image/svg+xml">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" id="logo">
+        <h1 style="text-align: center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Crop Recommender</h1>
+        <a href="/">Home</a>
+    </div>
+
+    <div class="container">
+        <h2>Enter Crop Features</h2>
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="feature1">Nitrogen <i>(in ppm)</i>:</label>
+                <input type="text" id="feature1" name="feature1" placeholder="Enter Nitrogen level" required>
+            </div>
+            <div class="form-group">
+                <label for="feature2">Phosphorus <i>(in ppm)</i>:</label>
+                <input type="text" id="feature2" name="feature2" placeholder="Enter Phosphorus level" required>
+            </div>
+            <div class="form-group">
+                <label for="feature3">Potassium <i>(in ppm)</i>:</label>
+                <input type="text" id="feature3" name="feature3" placeholder="Enter Potassium level" required>
+            </div>
+            <div class="form-group">
+                <label for="feature4">Temperature <i>(in degree Celsius)</i>:</label>
+                <input type="text" id="feature4" name="feature4" placeholder="Enter Temperature" required>
+            </div>
+            <div class="form-group">
+                <label for="feature5">Humidity <i>(%)</i>:</label>
+                <input type="text" id="feature5" name="feature5" placeholder="Enter Humidity level" required>
+            </div>
+            <div class="form-group">
+                <label for="feature6">Soil pH:</label>
+                <input type="text" id="feature6" name="feature6" placeholder="Enter Soil pH level" required>
+            </div>
+            <div class="form-group">
+                <label for="feature7">Rainfall (in mm):</label>
+                <input type="text" id="feature7" name="feature7" placeholder="Enter Rainfall level" required>
+            </div>
+            <div class="form-buttons">
+                <button type="submit">Predict</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+
+        <div id="result" style="display: none;">
+            <h2>Prediction Result</h2>
+            <p id="prediction"></p>
+            <img id="predictionImage" src="" alt="Prediction Image">
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Crop Prediction App. All rights reserved.
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#predictionForm').on('submit', function(event) {
+                event.preventDefault();
+                const features = [
+                    $('input[name="feature1"]').val(),
+                    $('input[name="feature2"]').val(),
+                    $('input[name="feature3"]').val(),
+                    $('input[name="feature4"]').val(),
+                    $('input[name="feature5"]').val(),
+                    $('input[name="feature6"]').val(),
+                    $('input[name="feature7"]').val()
+                ];
+                $.ajax({
+                    url: '{{ url_for("predict") }}',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({features: features}),
+                    success: function(response) {
+                        $('#prediction').text(response.prediction);
+                        $('#predictionImage').attr('src', response.image).show();
+                        $('#result').show(); // Show the result section
+                    }
+                });
+            });
+
+            $('button[type="reset"]').on('click', function() {
+                $('#result').hide(); // Hide the result section
+            });
+        });
+    </script>
+</body>
+</html>

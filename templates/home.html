@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="shortcut icon" href="static/logo-2.png" type="image/svg+xml">
+    <style>
+        .banner {
+            height: 100vh;
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,85,121,1) 35%, rgba(0,212,255,1) 100%);
+            background-image: url('{{ url_for("static", filename="bg2.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+        }
+        .icon-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .icon-container .icon {
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+        }
+        .icon-container .icon img {
+            width: 150px;
+            height: 150px;
+        }
+        .icon-container .icon p {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        h3 {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #titleh1{
+            font-size: 64px;
+            font-family: 'Montserrat', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        #tagh3{
+            font-size: 28px;
+            font-family: 'Lobster', cursive;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div class="banner">
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='logo-2.png') }}" class="logo" alt="farm assist logo" id="logo">
+            <ul>
+                <li><a href="#">Code</a></li>
+            </ul>
+        </div>
+        <h1 id="titleh1">Farm Assist</h1>
+        <h3 id="tagh3">Planting Prosperity, Harvesting Hope</h3>
+
+        <div class="content">
+            <div class="icon-container">
+                <a href="{{ url_for('crop_predict') }}" style="text-decoration: none;">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='cropRecommend.png') }}" alt="Crop Recommender">
+                        <p>Crop Recommender</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('disease_predict')}}" style="text-decoration: none;">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='plantDiseasePrevention.png') }}" alt="Crop Disease Predictor">
+                        <p>Crop Disease Predictor</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; Mini Project, 2024, 'Farm Assist'
+    </div>
+</body>
+</html>

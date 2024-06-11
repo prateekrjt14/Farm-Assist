@@ -1,0 +1,142 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("../static/bg3.jpg");
+    background-size: cover;
+}
+
+/* Header styles */
+.header {
+    background: linear-gradient(to right, #f4f4f4, #ddd); /* Add linear gradient */
+    padding: 10px 10px 0px; /* Add padding at the bottom to create space */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: #333;
+    justify-content: center; /* Center align the header text */
+    flex-grow: 1; /* Allow the header text to take up remaining space */
+}
+
+.header img {
+    width: 90px;
+    max-height: 90px;
+}
+
+.header a {
+    color: #333;
+    text-decoration: none;
+}
+
+/* Container styles */
+.container {
+    max-width: 400px;
+    margin: 30px auto; /* Add margin to create space between header and form */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+/* Form styles */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+button[type="submit"],
+button[type="reset"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+button[type="reset"]:hover {
+    background-color: #0056b3;
+}
+
+/* Align buttons horizontally */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+button[type="submit"] {
+    flex: 1;
+    margin-right: 10px;
+}
+
+button[type="reset"] {
+    flex: 1;
+}
+
+/* Result styles */
+#result {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#prediction {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#predictionImage {
+    max-width: 300px;
+    display: none;
+    margin: 0 auto;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #6a0dad;
+    color: #fff;
+    text-align: center;
+    padding: 10px; /* Add padding to create space between form and footer */
+}
